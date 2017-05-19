@@ -14,11 +14,12 @@
     "url": "https://github.com/redgeoff/docker-task-discover"
   },
   "scripts": {
-    "assert-beautified": "beautify-proj -i test -c beautify.json -e bundle.js && beautify-proj -i scripts -c beautify.json && beautify-proj -i migrations -c beautify.json && beautify-proj -i utils -c beautify.json",
-    "beautify": "beautify-proj -i test -o . -c beautify.json -e bundle.js && beautify-proj -i scripts -o . -c beautify.json && beautify-proj -i migrations -o . -c beautify.json && beautify-proj -i utils -o . -c beautify.json",
-    "jshint": "jshint -c .jshintrc *.js test scripts migrations utils",
-    "node-test": "istanbul test --dir coverage/node ./node_modules/mocha/bin/_mocha test/node/index.js",
-    "node-full-test": "npm run jshint && npm run node-test --coverage && istanbul check-coverage --lines 100 --function 100 --statements 100 --branches 100",
+    "assert-beautified": "beautify-proj -i test -c beautify.json && beautify-proj -i scripts -c beautify.json",
+    "beautify": "beautify-proj -i test -o . -c beautify.json && beautify-proj -i scripts -o . -c beautify.json",
+    "jshint": "jshint -c .jshintrc test scripts",
+    "node-test": "./node_modules/mocha/bin/_mocha test/index.js",
+    "node-test-with-coverage": "istanbul test --dir coverage/node ./node_modules/mocha/bin/_mocha test/index.js",
+    "node-full-test": "npm run jshint && npm run node-test-with-coverage --coverage && istanbul check-coverage --lines 100 --function 100 --statements 100 --branches 100",
     "test": "npm run assert-beautified && npm run node-full-test"
   },
   "dependencies": {

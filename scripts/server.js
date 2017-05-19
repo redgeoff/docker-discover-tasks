@@ -1,8 +1,7 @@
 'use strict';
 
 var express = require('express'),
-  bodyParser = require('body-parser'),
-  Promise = require('bluebird');
+  bodyParser = require('body-parser');
 
 var Server = function (port) {
   this._port = port;
