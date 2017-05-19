@@ -1,10 +1,12 @@
 'use strict';
 
 var express = require('express'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser'),
+  Tasks = require('./tasks');
 
 var Server = function (port) {
   this._port = port;
+  this._tasks = new Tasks();
   this._init();
   this._registerRoutes();
 };
@@ -23,8 +25,12 @@ Server.prototype._init = function () {
 Server.prototype._registerRoutes = function () {
   var self = this;
 
-  self._app.get('/', function (req, res) {
+  self._app.get('/discover', function (req, res) {
     self._discover(req, res);
+  });
+
+  self._app.get('/hostname', function (req, res) {
+    self._hostname(req, res);
   });
 };
 
@@ -43,6 +49,10 @@ Server.prototype.stop = function () {
 Server.prototype._discover = function (req, res) {
   // TODO
   res.send('Hello World!');
+};
+
+Server.prototype._hostname = function (req, res) {
+  res.send(this._tasks.hostname());
 };
 
 module.exports = Server;

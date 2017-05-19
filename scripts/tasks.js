@@ -1,6 +1,7 @@
 'use strict';
 
 var dns = require('dns'),
+  os = require('os'),
   Promise = require('bluebird');
 
 var lookup = Promise.promisify(dns.lookup);
@@ -18,6 +19,10 @@ Tasks.prototype.discover = function () {
   }).then(function (stuff) {
     console.log(stuff);
   });
+};
+
+Tasks.prototype.hostname = function () {
+  return os.hostname();
 };
 
 module.exports = Tasks;
