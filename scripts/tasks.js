@@ -2,7 +2,9 @@
 
 var dns = require('dns'),
   os = require('os'),
-  Promise = require('bluebird');
+  Promise = require('bluebird'),
+  hosts = require('./hosts'),
+  log = require('./log');
 
 var lookup = Promise.promisify(dns.lookup);
 
@@ -16,12 +18,17 @@ Tasks.prototype.discover = function () {
   return lookup('tasks.' + this._serviceName, {
     all: true
   }).then(function (addresses) {
-    // TODO: get hostnames
+    return addresses;
   });
 };
 
 Tasks.prototype.hostname = function () {
   return os.hostname();
+};
+
+Tasks.prototype.registerLocally = function (hostname, address) {
+  log('Registering ' + hostname + ' => ' + address);
+  return hosts.upsert(hostname, address);
 };
 
 module.exports = Tasks;
