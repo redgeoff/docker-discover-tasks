@@ -1,0 +1,43 @@
+{
+  "name": "docker-task-discover",
+  "version": "0.0.1",
+  "description": "Distributed discovery of docker service tasks",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/redgeoff/docker-task-discover"
+  },
+  "keywords": [],
+  "author": "Geoff Cox",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/redgeoff/docker-task-discover"
+  },
+  "scripts": {
+    "assert-beautified": "beautify-proj -i test -c beautify.json -e bundle.js && beautify-proj -i scripts -c beautify.json && beautify-proj -i migrations -c beautify.json && beautify-proj -i utils -c beautify.json",
+    "beautify": "beautify-proj -i test -o . -c beautify.json -e bundle.js && beautify-proj -i scripts -o . -c beautify.json && beautify-proj -i migrations -o . -c beautify.json && beautify-proj -i utils -o . -c beautify.json",
+    "jshint": "jshint -c .jshintrc *.js test scripts migrations utils",
+    "node-test": "istanbul test --dir coverage/node ./node_modules/mocha/bin/_mocha test/node/index.js",
+    "node-full-test": "npm run jshint && npm run node-test --coverage && istanbul check-coverage --lines 100 --function 100 --statements 100 --branches 100",
+    "test": "npm run assert-beautified && npm run node-full-test"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "body-parser": "^1.15.2",
+    "events": "^1.1.1",
+    "express": "^4.14.0",
+    "inherits": "^2.0.1",
+    "request": "^2.74.0"
+  },
+  "devDependencies": {
+    "beautify-proj": "0.0.4",
+    "browserify": "^13.1.1",
+    "browserify-istanbul": "^2.0.0",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "istanbul": "^0.4.4",
+    "jshint": "^2.9.2",
+    "mocha": "^3.0.2",
+    "uglify-js": "^3.0.8"
+  }
+}
