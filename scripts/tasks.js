@@ -6,18 +6,17 @@ var dns = require('dns'),
 
 var lookup = Promise.promisify(dns.lookup);
 
-var Tasks = function () {
-
+var Tasks = function (serviceName) {
+  this._serviceName = serviceName;
 };
 
-// discover
 // [ { address: '10.0.9.4', family: 4 },
 // { address: '10.0.9.3', family: 4 } ]
 Tasks.prototype.discover = function () {
-  return lookup('google.com', {
+  return lookup('tasks.' + this._serviceName, {
     all: true
-  }).then(function (stuff) {
-    console.log(stuff);
+  }).then(function (addresses) {
+    // TODO: get hostnames
   });
 };
 
