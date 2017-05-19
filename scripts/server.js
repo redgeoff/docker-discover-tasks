@@ -4,9 +4,9 @@ var express = require('express'),
   bodyParser = require('body-parser'),
   Tasks = require('./tasks');
 
-var Server = function (port) {
+var Server = function (serviceName, port) {
   this._port = port;
-  this._tasks = new Tasks();
+  this._tasks = new Tasks(serviceName);
   this._init();
   this._registerRoutes();
 };

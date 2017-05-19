@@ -6,6 +6,6 @@
 
 var Server = require('./server');
 
-var server = new Server(3000);
+var server = new Server('myservice', 3000);
 
 server.start();
