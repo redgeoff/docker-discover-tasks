@@ -1,6 +1,6 @@
 {
   "name": "docker-discover-tasks",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Distributed discovery of docker service tasks",
   "main": "bin/index.js",
   "repository": {
