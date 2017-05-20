@@ -17,7 +17,19 @@ TODO: need to modify as nslookup doesn't return task ids and so will need to cre
 - During startup, uses localhost:<port> to discover hosts and then calls <host>:<port> for each of the discovered hosts
 
 
-Run Tests
+Run All Tests And Analyze Code Coverage
 ---
 
     $ npm run test
+
+
+Run All Test (Without Analyzing Code Coverage)
+---
+
+    $ npm run node-test
+
+
+Run Single Test (Without Analyzing Code Coverage)
+---
+
+    $ npm run node-test -- -g <testname>
