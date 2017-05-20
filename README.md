@@ -6,12 +6,8 @@ Distributed discovery of docker service tasks
 Design
 ---
 
-Revised (clean up and use pieces from below):
-- Provide GET <hostname>:<port>/register which allows host to register hostname and IP
-- On start up, discover all tasks and for each task request <hostname>:<port>/register
-
-
-TODO: need to modify as nslookup doesn't return task ids and so will need to create service that can be queried for hostname. Can use os.hostname()
-- Uses /etc/hosts file in each container to maintain list so that there is no single point of failure
-- Provides API, at <host>:<port>, which uses nslookup (via node) to query `tasks.<service-name>` to get list of containers and populates/replaces `<service-name>.<task-id>` entries in /etc/hosts.
-- During startup, uses localhost:<port> to discover hosts and then calls <host>:<port> for each of the discovered hosts
+- Exposes the `GET <hostname>:<port>/register` API to allow a host to register their hostname and IP address in `/etc/hosts`. `register` also returns the hostname of the host running the API
+- On start up, queries `<service-name>.<task-id>` to retrieve a list of all the IP addresses of the tasks. Uses the `register` API to register the local hostname and local IP address with the remote host. The returned remote hostname is registered in the local `/etc/hosts` file.
+- The result is that all tasks (hosts) have an eventually consistent `/etc/hosts` file that points to all other tasks. Moreover, if a task dies and is restarted, the restarted task will eventually update all the other tasks with the latest IP address.
+- All API requests are fault-tolerant and will retry if the service is not yet available
+- All writes and reads to `/etc/hosts` are synchronized
