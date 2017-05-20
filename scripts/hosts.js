@@ -7,10 +7,15 @@ var hostsLookup = require('hosts-lookup'),
 var set = Promise.promisify(hostile.set),
   remove = Promise.promisify(hostile.set);
 
-var Hosts = function () {};
+var Hosts = function () {
+  // Synchronize access to the /etc/hosts file as the upsert is otherwise not atomic
+  this._synchronizer = Promise.resolve();
+};
 
 Hosts.prototype.get = function (hostname) {
-  return hostsLookup(hostname);
+  return this._synchronizer = this._synchronizer.then(function () {
+    return hostsLookup(hostname);
+  });
 };
 
 Hosts.prototype._removeIfExists = function (hostname) {
@@ -24,8 +29,11 @@ Hosts.prototype._removeIfExists = function (hostname) {
 };
 
 Hosts.prototype.upsert = function (hostname, address) {
-  return this._removeIfExists(hostname, address).then(function () {
-    return set(address, hostname);
+  var self = this;
+  return self._synchronizer = self._synchronizer.then(function () {
+    return self._removeIfExists(hostname, address).then(function () {
+      return set(address, hostname);
+    });
   });
 };
 
