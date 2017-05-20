@@ -1,17 +1,17 @@
 {
-  "name": "docker-task-discover",
+  "name": "docker-discover-tasks",
   "version": "0.0.2",
   "description": "Distributed discovery of docker service tasks",
   "main": "bin/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/redgeoff/docker-task-discover"
+    "url": "git://github.com/redgeoff/docker-discover-tasks"
   },
   "keywords": [],
   "author": "Geoff Cox",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/redgeoff/docker-task-discover"
+    "url": "https://github.com/redgeoff/docker-discover-tasks"
   },
   "scripts": {
     "assert-beautified": "beautify-proj -i test -c beautify.json && beautify-proj -i scripts -c beautify.json",

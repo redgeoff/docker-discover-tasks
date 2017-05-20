@@ -1,4 +1,4 @@
-# docker-task-discover
+# docker-discover-tasks
 
 Distributed discovery of docker service tasks
 
