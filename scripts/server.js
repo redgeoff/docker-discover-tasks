@@ -68,9 +68,9 @@ Server.prototype._register = function () {
   return function (req, res) {
     self._request(res, function () {
       return self._tasks.registerLocallyAndGetHostname(req.body.hostname, req.body.address)
-        .then(function (address) {
+        .then(function (hostname) {
           return {
-            address: address
+            hostname: hostname
           };
         });
     });

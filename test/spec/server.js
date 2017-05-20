@@ -47,7 +47,7 @@ describe('server', function () {
       response.body.should.eql({
         error: false,
         payload: {
-          address: server._tasks._hostname()
+          hostname: server._tasks._hostname()
         }
       });
 

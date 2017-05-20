@@ -12,11 +12,16 @@ var Hosts = function () {
   this._synchronizer = Promise.resolve();
 };
 
+Hosts.prototype._lookup = function (hostname) {
+  return hostsLookup(hostname);
+};
+
 Hosts.prototype.get = function (hostname) {
-  this._synchronizer = this._synchronizer.then(function () {
-    return hostsLookup(hostname);
+  var self = this;
+  self._synchronizer = self._synchronizer.then(function () {
+    return self._lookup(hostname);
   });
-  return this._synchronizer;
+  return self._synchronizer;
 };
 
 Hosts.prototype._removeIfExists = function (hostname) {

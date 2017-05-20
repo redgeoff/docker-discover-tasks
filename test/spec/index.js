@@ -6,4 +6,4 @@ log.mute();
 
 require('./log');
 require('./server');
-// require('./tasks');
+require('./tasks');
