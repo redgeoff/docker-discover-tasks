@@ -38,12 +38,20 @@ Tasks.prototype._hostname = function () {
 };
 
 // Modify our /etc/hosts file to add the hostname => address mapping
-Tasks.prototype.registerLocally = function (hostname, address) {
+Tasks.prototype._registerLocally = function (hostname, address) {
   log.log('Registering ' + hostname + ' => ' + address);
   return this._hosts.upsert(hostname, address);
 };
 
-// Register our hostname and address with the task on target host
+Tasks.prototype.registerLocallyAndGetHostname = function (hostname, address) {
+  var self = this;
+  return self._registerLocally(hostname, address).then(function () {
+    return self._hostname();
+  });
+};
+
+// Register the local hostname and address with the task on remote host. Then register the remote
+// hostname locally.
 Tasks.prototype._registerRemotely = function (hostname) {
   var self = this,
     myHostname = self._hostname();
@@ -70,6 +78,7 @@ Tasks.prototype.broadcast = function () {
   return self._discover().then(function (addresses) {
     var promises = [];
     addresses.forEach(function (address) {
+      // TODO: needs to then register remote address!!
       promises.push(self._registerRemotely(address.address));
     });
     return Promise.all(promises);

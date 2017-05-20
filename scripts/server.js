@@ -43,9 +43,10 @@ Server.prototype._error = function (res, err) {
   });
 };
 
-Server.prototype._success = function (res) {
+Server.prototype._success = function (res, payload) {
   res.json({
-    error: false
+    error: false,
+    payload: payload
   });
 };
 
@@ -55,8 +56,8 @@ Server.prototype._request = function (res, factory) {
   // Wrap with Promise.resolve() in case factory doesn't return promise
   return Promise.resolve().then(function () {
     return factory();
-  }).then(function () {
-    self._success(res);
+  }).then(function (payload) {
+    self._success(res, payload);
   }).catch(function (err) {
     self._error(res, err);
   });
@@ -66,7 +67,12 @@ Server.prototype._register = function () {
   var self = this;
   return function (req, res) {
     self._request(res, function () {
-      return self._tasks.registerLocally(req.body.hostname, req.body.address);
+      return self._tasks.registerLocallyAndGetHostname(req.body.hostname, req.body.address)
+        .then(function (address) {
+          return {
+            address: address
+          };
+        });
     });
   };
 };

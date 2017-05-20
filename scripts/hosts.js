@@ -13,9 +13,10 @@ var Hosts = function () {
 };
 
 Hosts.prototype.get = function (hostname) {
-  return this._synchronizer = this._synchronizer.then(function () {
+  this._synchronizer = this._synchronizer.then(function () {
     return hostsLookup(hostname);
   });
+  return this._synchronizer;
 };
 
 Hosts.prototype._removeIfExists = function (hostname) {
@@ -30,11 +31,12 @@ Hosts.prototype._removeIfExists = function (hostname) {
 
 Hosts.prototype.upsert = function (hostname, address) {
   var self = this;
-  return self._synchronizer = self._synchronizer.then(function () {
+  self._synchronizer = self._synchronizer.then(function () {
     return self._removeIfExists(hostname, address).then(function () {
       return set(address, hostname);
     });
   });
+  return this._synchronizer;
 };
 
 module.exports = Hosts;

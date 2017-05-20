@@ -40,11 +40,15 @@ describe('server', function () {
         hostname: hostname,
         address: address
       });
+      return Promise.resolve();
     };
 
     return register().then(function (response) {
       response.body.should.eql({
-        error: false
+        error: false,
+        payload: {
+          address: server._tasks._hostname()
+        }
       });
 
       hosts.should.eql([{
@@ -56,7 +60,7 @@ describe('server', function () {
 
   it('should process error', function () {
     // Fake
-    server._tasks.registerLocally = function () {
+    server._tasks._registerLocally = function () {
       return Promise.reject(new Error('myerror'));
     };
 
