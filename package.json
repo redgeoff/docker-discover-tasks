@@ -20,7 +20,9 @@
     "node-test": "./node_modules/mocha/bin/_mocha test/index.js",
     "node-test-with-coverage": "istanbul test --dir coverage/node ./node_modules/mocha/bin/_mocha test/index.js",
     "node-full-test": "npm run jshint && npm run node-test-with-coverage --coverage && istanbul check-coverage --lines 100 --function 100 --statements 100 --branches 100",
-    "test": "npm run assert-beautified && npm run node-full-test"
+    "test": "npm run assert-beautified && npm run node-full-test",
+    "listen": "./bin/listen.js",
+    "broadcast": "./bin/broadcast.js"
   },
   "dependencies": {
     "bluebird": "^3.4.1",
@@ -30,7 +32,9 @@
     "hostile": "^1.3.0",
     "hosts-lookup": "^1.2.0",
     "inherits": "^2.0.1",
-    "request": "^2.74.0"
+    "request": "^2.74.0",
+    "requestretry": "^1.12.0",
+    "retry-request": "^2.0.2"
   },
   "devDependencies": {
     "beautify-proj": "0.0.4",

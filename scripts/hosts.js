@@ -13,7 +13,7 @@ Hosts.prototype.get = function (hostname) {
   return hostsLookup(hostname);
 };
 
-Hosts.prototype._removeIfExists = function (hostname, address) {
+Hosts.prototype._removeIfExists = function (hostname) {
   return this.get(hostname).then(function (existingAddress) {
     return remove(existingAddress, hostname);
   }).catch(function (err) {
@@ -29,4 +29,4 @@ Hosts.prototype.upsert = function (hostname, address) {
   });
 };
 
-module.exports = new Hosts();
+module.exports = Hosts;

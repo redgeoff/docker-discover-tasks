@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-// TODO: use minist to get params from CL
+// TODO: use minimist to get params from CL
 
 'use strict';
 
-var Server = require('./server');
+var Server = require('../scripts/server');
 
 var server = new Server('myservice', 3000);
 
