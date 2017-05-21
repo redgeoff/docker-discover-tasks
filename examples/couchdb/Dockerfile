@@ -6,7 +6,7 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - \
   && npm install npm -g
 
 # TODO: install docker-discover-tasks
-# RUN npm install docker-discover-tasks
+# RUN npm install -g docker-discover-tasks
 
 COPY base-process.sh /base-process.sh
 COPY discover-tasks.sh /discover-tasks.sh
