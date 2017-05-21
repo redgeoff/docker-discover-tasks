@@ -8,7 +8,7 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - \
 RUN npm install -g docker-discover-tasks
 
 COPY base-process.sh /base-process.sh
-COPY discover-tasks.sh /discover-tasks.sh
+COPY discover-process.sh /discover-process.sh
 COPY wrapper.sh /wrapper.sh
 
 CMD ["/wrapper.sh"]

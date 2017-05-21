@@ -3,10 +3,10 @@
 # Adaptation of https://docs.docker.com/engine/admin/multi-service_container/
 
 # Start the first process
-/discover-tasks.sh &
+/discover-process.sh &
 status=$?
 if [ $status -ne 0 ]; then
-  echo "Failed to start discover-tasks: $status"
+  echo "Failed to start discover-process: $status"
   exit $status
 fi
 
@@ -22,12 +22,16 @@ fi
 # exit with an error
 
 while /bin/true; do
-  PROCESS_1_STATUS=$(ps aux | grep discover-tasks | grep -v grep | wc -l)
-  PROCESS_2_STATUS=$(ps aux | grep base-process | grep -v grep | wc -l)
+  DISCOVER_STATUS=$(ps aux | grep discover-process | grep -v grep | wc -l)
+  BASE_STATUS=$(ps aux | grep base-process | grep -v grep | wc -l)
   # If the greps above find anything, they will exit with 0 status
   # If they are not both 0, then something is wrong
-  if [ $PROCESS_1_STATUS -ne 1 -o $PROCESS_2_STATUS -ne 1 ]; then
-    echo "One of the processes has already exited."
+  if [ $DISCOVER_STATUS -ne 1 ]; then
+    echo "discover-process has already exited."
+    exit -1
+  fi
+  if [ $BASE_STATUS -ne 1 ]; then
+    echo "base-processes has already exited."
     exit -1
   fi
   sleep 30
