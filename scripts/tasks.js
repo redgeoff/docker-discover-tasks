@@ -74,6 +74,7 @@ Tasks.prototype._registerRemotely = function (address) {
   return self._hosts.get(localHostname).then(function (localAddress) {
     return self._requestRegistration(address, localHostname, localAddress);
   }).then(function (response) {
+    log.log(localHostname + ' responded with a remote hostname of ' + response.body.payload.hostname);
     return self._registerLocally(response.body.payload.hostname, address);
   });
 };

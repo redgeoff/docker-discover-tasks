@@ -16,16 +16,20 @@ Hosts.prototype._lookup = function (hostname) {
   return hostsLookup(hostname);
 };
 
+Hosts.prototype._unsynchronizedGet = function (hostname) {
+  return this._lookup(hostname);
+};
+
 Hosts.prototype.get = function (hostname) {
   var self = this;
   self._synchronizer = self._synchronizer.then(function () {
-    return self._lookup(hostname);
+    return self._unsynchronizedGet(hostname);
   });
   return self._synchronizer;
 };
 
 Hosts.prototype._removeIfExists = function (hostname) {
-  return this.get(hostname).then(function (existingAddress) {
+  return this._unsynchronizedGet(hostname).then(function (existingAddress) {
     return remove(existingAddress, hostname);
   }).catch(function (err) {
     if (err !== 'No such host!') {
