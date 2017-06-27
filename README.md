@@ -1,5 +1,7 @@
 # docker-discover-tasks
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/redgeoff/docker-discover-tasks.svg)](https://greenkeeper.io/)
+
 Distributed discovery of docker service tasks
 
 
